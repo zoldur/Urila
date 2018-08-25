@@ -9,7 +9,7 @@ COIN_PATH='/usr/local/bin/'
 COIN_TGZ='https://github.com/zoldur/Urila/releases/download/v1.0.0.0/urila.tgz'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 COIN_NAME='Urila'
-COIN_PORT=39797
+COIN_PORT=4562
 RPC_PORT=39798
 
 NODEIP=$(curl -s4 api.ipify.org)
@@ -216,6 +216,17 @@ fi
 clear
 }
 
+purge_old_installation() {
+  echo -e "${RED}Searching and removing old $COIN_NAME files and configurations${NC}"
+  systemctl stop $COIN_NAME.service > /dev/null 2>&1
+  killall $COIN_DAEMON > /dev/null 2>&1
+  rm -r /root/$CONFIGFOLDER > /dev/null 2>&1
+  rm $COIN_PATH$COIN_CLI $COIN_PATH$COIN_DAEMON > /dev/null 2>&1
+  echo -e "${RED}* Done${NONE}"
+  clear
+}
+
+
 function important_information() {
  echo -e "================================================================================================================================"
  echo -e "$COIN_NAME Masternode is up and running listening on port ${RED}$COIN_PORT${NC}."
@@ -246,7 +257,7 @@ function setup_node() {
 
 ##### Main #####
 clear
-
+purge_old_installation
 checks
 prepare_system
 download_node
