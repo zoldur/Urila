@@ -222,7 +222,6 @@ purge_old_installation() {
   killall $COIN_DAEMON > /dev/null 2>&1
   rm -r /root/$CONFIGFOLDER > /dev/null 2>&1
   rm $COIN_PATH$COIN_CLI $COIN_PATH$COIN_DAEMON > /dev/null 2>&1
-  echo -e "${RED}* Done${NONE}"
   clear
 }
 
